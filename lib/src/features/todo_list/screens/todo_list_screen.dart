@@ -6,7 +6,9 @@ import 'package:todo/src/common/models/todo_model.dart';
 import 'package:todo/src/features/todo_list/widgets/todo_item.dart';
 
 class ToDoListScreen extends StatefulWidget {
-  const ToDoListScreen({super.key});
+  const ToDoListScreen({
+    super.key,
+  });
 
   @override
   State<ToDoListScreen> createState() => _ToDoListScreenState();
@@ -15,6 +17,8 @@ class ToDoListScreen extends StatefulWidget {
 class _ToDoListScreenState extends State<ToDoListScreen> {
   final List<ToDo> todoList = [];
   List<ToDo> _foundToDo = [];
+  bool ff = true;
+  bool ff5 = false;
   final TextEditingController _todoController = TextEditingController();
 
   @override
@@ -29,22 +33,35 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
     if (todoString != null) {
       final List<dynamic> todoJson = json.decode(todoString);
       setState(() {
-        todoList.addAll(todoJson.map((json) => ToDo.fromjson(json)).toList());
+        todoList.addAll(
+          todoJson
+              .map(
+                (json) => ToDo.fromjson(json),
+              )
+              .toList(),
+        );
       });
     }
   }
 
   Future<void> _saveToDoList() async {
     final prefs = await SharedPreferences.getInstance();
-    final String todoString =
-        json.encode(todoList.map((todo) => todo.toJson()).toList());
+    final String todoString = json.encode(
+      todoList
+          .map(
+            (todo) => todo.toJson(),
+          )
+          .toList(),
+    );
 
     await prefs.setString('todos', todoString);
   }
 
   void _deleteToDoItem(String id) {
     setState(() {
-      todoList.removeWhere((item) => item.id == id);
+      todoList.removeWhere(
+        (item) => item.id == id,
+      );
     });
     _saveToDoList();
   }
@@ -78,9 +95,11 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
       result = todoList;
     } else {
       result = todoList
-          .where((item) => item.toDoText!
-              .toLowerCase()
-              .contains(enteredKeyword.toLowerCase()))
+          .where(
+            (item) => item.toDoText!.toLowerCase().contains(
+                  enteredKeyword.toLowerCase(),
+                ),
+          )
           .toList();
     }
     setState(() {
@@ -129,7 +148,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                       border: InputBorder.none,
                       hintText: 'Search',
                       hintStyle: TextStyle(
-                        color: Colors.black,
+                        color: Colors.grey,
                       ),
                     ),
                   ),
@@ -193,6 +212,9 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                       controller: _todoController,
                       decoration: const InputDecoration(
                         hintText: 'Добавить новую задачу',
+                        hintStyle: TextStyle(
+                          color: Colors.grey,
+                        ),
                         border: InputBorder.none,
                       ),
                     ),
