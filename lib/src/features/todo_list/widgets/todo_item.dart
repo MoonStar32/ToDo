@@ -41,6 +41,7 @@ class ToDoItem extends StatelessWidget {
         ),
         leading: Icon(
           todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,
+          color: Colors.black,
         ),
         trailing: Container(
           margin: const EdgeInsets.symmetric(
