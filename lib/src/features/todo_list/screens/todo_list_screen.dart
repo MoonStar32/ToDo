@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/src/common/models/todo_model.dart';
+import 'package:todo/src/features/theme/widgets/change_theme_button.dart';
 import 'package:todo/src/features/todo_list/widgets/todo_item.dart';
 
 class ToDoListScreen extends StatefulWidget {
@@ -17,8 +18,6 @@ class ToDoListScreen extends StatefulWidget {
 class _ToDoListScreenState extends State<ToDoListScreen> {
   final List<ToDo> todoList = [];
   List<ToDo> _foundToDo = [];
-  bool ff = true;
-  bool ff5 = false;
   final TextEditingController _todoController = TextEditingController();
 
   @override
@@ -40,6 +39,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
               )
               .toList(),
         );
+        _foundToDo = todoList;
       });
     }
   }
@@ -111,9 +111,18 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      drawer: const Drawer(
+      drawer: Drawer(
         child: Scaffold(
-          body: Column(),
+          appBar: AppBar(
+            title: const Text('Settings'),
+            leading: const Icon(
+              Icons.settings,
+              size: 30,
+            ),
+          ),
+          body: const Center(
+            child: ChangeThemeButton(),
+          ),
         ),
       ),
       body: Stack(
